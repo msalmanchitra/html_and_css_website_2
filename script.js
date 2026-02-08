@@ -1,26 +1,26 @@
-// Add to cart alert
-document.querySelectorAll(".product button").forEach(btn => {
-  btn.addEventListener("click", () => {
-    alert("Product added to cart 🛒");
+let cart = [];
+
+document.querySelectorAll(".product button, .product-card button").forEach(button => {
+  button.addEventListener("click", function () {
+    
+    const card = this.closest(".product, .product-card");
+    const name = card.querySelector("h3").innerText;
+    const priceText = card.querySelector(".price") 
+        ? card.querySelector(".price").innerText 
+        : card.querySelector("p").innerText;
+
+    const price = parseInt(priceText.replace(/\D/g, ""));
+
+    const item = {
+      name: name,
+      price: price
+    };
+
+    cart.push(item);
+
+    alert(name + " added to cart 🛒");
+
+    console.log(cart);
   });
 });
 
-// Search Filter
-let search = document.querySelector(".search-box input");
-
-if(search){
-  search.addEventListener("keyup", function(){
-    let value = this.value.toLowerCase();
-    let products = document.querySelectorAll(".product");
-
-    products.forEach(p => {
-      let name = p.querySelector("h3").innerText.toLowerCase();
-      p.style.display = name.includes(value) ? "block" : "<script>
-if(localStorage.getItem("isLoggedIn") !== "true"){
-   window.location.href = "login.html";
-}
-</script>
-none";
-    });
-  });
-}
